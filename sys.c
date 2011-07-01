@@ -14,6 +14,8 @@
 #include <time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <dirent.h>
+#define NAMLEN(dirent) strlen((dirent)->d_name)
 
 #define SBINCREMENT 256
 
@@ -231,6 +233,25 @@ static int l_pwd(lua_State *L) {
   return sbpush(L, &sb);
 }
 
+static int l_dir(lua_State *L) {
+  int k = 0;
+  const char *s = luaL_checkstring(L, 1);
+  DIR *dirp;
+  struct dirent *d;
+  dirp = opendir(s);
+  if (dirp) {
+    lua_createtable(L, 0, 0);
+    while ((d = readdir(dirp))) {
+      int n = NAMLEN(d);
+      lua_pushlstring(L, d->d_name, n);
+      lua_rawseti(L, -2, ++k);
+    }
+    closedir(dirp);
+  } else
+    lua_pushnil(L);
+  return 1;
+}
+
 static int concat_fname(lua_State *L, const char *fname) {
   const char *from = lua_tostring(L, -1);
   const char *s;
@@ -293,6 +314,7 @@ static const struct luaL_reg routines [] = {
   {"dirname", l_dirname},
   {"basename", l_basename},
   {"concat", l_concat},
+  {"dir", l_dir},
   {"pwd", l_pwd},
   {NULL, NULL}
 };

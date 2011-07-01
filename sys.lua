@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------
 --
--- Copyright (c) 2010 Clement Farabet
+-- Copyright (c) 2011 Clement Farabet
 -- 
 -- Permission is hereby granted, free of charge, to any person obtaining
 -- a copy of this software and associated documentation files (the
@@ -26,10 +26,10 @@
 --     sys - a package that provides simple system (unix) tools
 --
 -- ack:
---     the C lib was largely taken from Torch5
+--     the C lib was largely taken from Torch5 (code from Ronan)
 --
 -- history: 
---     March 27, 2011, 9:58PM - creation
+--     March 27, 2011, 9:58PM - creation - Clement Farabet
 ----------------------------------------------------------------------
 
 require 'os'
@@ -123,6 +123,22 @@ prefix = execute('which lua'):gsub('/bin/lua\n','')
 --------------------------------------------------------------------------------
 function sleep(seconds)
    usleep(seconds*1000000)
+end
+
+--------------------------------------------------------------------------------
+-- file iterator, in given path
+--------------------------------------------------------------------------------
+function files(path)
+   local d = dir(path)
+   local n = 0
+   return function()
+             n = n + 1
+             if (d and n <= #d) then
+                return d[n]
+             else
+                return nil
+             end
+          end
 end
 
 --------------------------------------------------------------------------------
