@@ -119,6 +119,15 @@ lla = function() return execute 'ls -la' end
 prefix = execute('which lua'):gsub('/bin/lua\n','')
 
 --------------------------------------------------------------------------------
+-- always returns the path of the file running
+--------------------------------------------------------------------------------
+function fpath()
+   local fpath = debug.getinfo(2).source:gsub('@','')
+   if fpath:find('/') ~= 1 then fpath = sys.concat(sys.pwd(),fpath) end
+   return sys.dirname(fpath),sys.basename(fpath)
+end
+
+--------------------------------------------------------------------------------
 -- sleep
 --------------------------------------------------------------------------------
 function sleep(seconds)
