@@ -123,8 +123,8 @@ prefix = execute('which lua'):gsub('/bin/lua\n','')
 --------------------------------------------------------------------------------
 function fpath()
    local fpath = _G.debug.getinfo(2).source:gsub('@','')
-   if fpath:find('/') ~= 1 then fpath = sys.concat(sys.pwd(),fpath) end
-   return sys.dirname(fpath),sys.basename(fpath)
+   if fpath:find('/') ~= 1 then fpath = concat(pwd(),fpath) end
+   return dirname(fpath),basename(fpath)
 end
 
 --------------------------------------------------------------------------------
