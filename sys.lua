@@ -61,10 +61,9 @@ end
 tic = function() 
          __t__ = clock() 
       end
-toc = function() 
+toc = function(verbose)
          __dt__ = clock() - __t__
-         tic()
-         print(__dt__)
+         if verbose then print(__dt__) end
          return __dt__ 
       end
 
