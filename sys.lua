@@ -143,9 +143,17 @@ function split(str, pat)
    end
    if last_end <= #str then
       cap = str:sub(last_end)
-      table.insert(t, cap)
+      _G.table.insert(t, cap)
    end
    return t
+end
+
+--------------------------------------------------------------------------------
+-- check if a number is NaN
+--------------------------------------------------------------------------------
+function isNaN(number)
+   -- We rely on the property that NaN is the only value that doesn't equal itself.
+   return (number ~= number)
 end
 
 --------------------------------------------------------------------------------
