@@ -115,7 +115,7 @@ lla = function() return execute 'ls -la' end
 --------------------------------------------------------------------------------
 -- prefix
 --------------------------------------------------------------------------------
-prefix = execute('which lua'):gsub('/bin/lua\n','')
+prefix = execute('which lua'):gsub('//','/'):gsub('/bin/lua\n','')
 
 --------------------------------------------------------------------------------
 -- always returns the path of the file running
