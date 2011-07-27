@@ -182,7 +182,7 @@ end
 --------------------------------------------------------------------------------
 -- colors, can be used to print things in color
 --------------------------------------------------------------------------------
-if qt and qt.qConsole.captureOutput then
+if _G.qt and _G.qt.qConsole.captureOutput then
    COLORS = {none = '',
              black = '',
              red = '',
