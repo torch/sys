@@ -72,10 +72,10 @@ toc = function(verbose)
 -- side effect: creates a file in /tmp/
 --------------------------------------------------------------------------------
 execute = function(cmd)
-             local tmpfile = '/tmp/lua.os.execute.out'
+             local tmpfile = '/tmp/lua.os.execute.out.' .. _G.tostring(clock())
              local cmd = cmd .. ' 1>'.. tmpfile..' 2>' .. tmpfile
              os.execute(cmd)
-             local file = io.open(tmpfile)
+             local file = _G.assert(io.open(tmpfile))
              local str = file:read('*all')
              file:close()
              str:gsub('\n$','')
