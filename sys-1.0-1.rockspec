@@ -23,15 +23,22 @@ dependencies = {
 }
 
 build = {
-   type = "builtin",
+   type = "cmake",
 
-   modules = {
-      sys = "sys.lua",
-      libsys = {
-         sources = {"sys.c"}
-         --libraries = {"date"},
-         --incdirs = {"$(LIBDATE_INCDIR)"},
-         --libdirs = {"$(LIBDATE_LIBDIR)"}
-      }
+   cmake = [[
+         cmake_minimum_required(VERSION 2.8)
+
+         set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+         include_directories (${PROJECT_SOURCE_DIR})
+         add_library (sys SHARED sys.c)
+         target_link_libraries (sys lua)
+
+         install_files(/lua sys.lua)
+         install_targets(/lib sys)
+   ]],
+
+   variables = {
+      CMAKE_INSTALL_PREFIX = "$(PREFIX)"
    }
 }
