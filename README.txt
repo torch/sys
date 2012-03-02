@@ -1,9 +1,11 @@
+DEPENDENCIES:
+Torch7 (www.torch.ch)
 
 INSTALL:
-$ luarocks --from=http://data.neuflow.org/lua/rocks install sys
+$ torch-pkg install sys
 
 USE:
-$ lua
+$ torch
 > require 'sys'
 > for k in pairs(sys) print(k) end  -- gives you all the included functions
 dirname
