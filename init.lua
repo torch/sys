@@ -69,11 +69,20 @@ toc = function(verbose)
 
 --------------------------------------------------------------------------------
 -- execute an OS command, but retrieves the result in a string
+-- side effect: file in /tmp
 --------------------------------------------------------------------------------
 execute = function(cmd, readwhat)
-             local f = io.popen(cmd, 'r')
-             local s = f:read(readwhat or '*all')
-             s = s:gsub('^%s*',''):gsub('%s*$','')
+             local tmpfile = '/tmp/lua.os.execute.out.' .. _G.tostring(clock())
+             local cmd = cmd .. ' 1>'.. tmpfile..' 2>' .. tmpfile
+             os.execute(cmd)
+             local file = _G.assert(io.open(tmpfile))
+             local s = file:read('*all')
+             file:close()
+             s:gsub('\n$','')
+             os.execute('rm ' .. tmpfile)
+             --local f = io.popen(cmd, 'r')
+             --local s = f:read(readwhat or '*all')
+             --s = s:gsub('^%s*',''):gsub('%s*$','')
              return s
           end
 
