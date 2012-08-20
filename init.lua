@@ -70,10 +70,9 @@ toc = function(verbose)
 --------------------------------------------------------------------------------
 -- execute an OS command, but retrieves the result in a string
 --------------------------------------------------------------------------------
-execute = function(cmd)
-             local f = _G.assert(io.popen(cmd, 'r'))
-             local s = _G.assert(f:read('*a'))
-             f:close()
+execute = function(cmd, readwhat)
+             local f = io.popen(cmd, 'r')
+             local s = f:read(readwhat or '*all')
              s = s:gsub('^%s*',''):gsub('%s*$','')
              return s
           end
