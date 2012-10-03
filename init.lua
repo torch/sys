@@ -78,13 +78,20 @@ execute = function(cmd, readwhat)
              local file = _G.assert(io.open(tmpfile))
              local s = file:read('*all')
              file:close()
-             s:gsub('\n$','')
+             s = s:gsub('^%s*',''):gsub('%s*$','')
              os.execute('rm ' .. tmpfile)
-             --local f = io.popen(cmd, 'r')
-             --local s = f:read(readwhat or '*all')
-             --s = s:gsub('^%s*',''):gsub('%s*$','')
              return s
           end
+
+-- TODO: use the following code, which would avoid the side effect.
+-- For now it doesnt work though, and I can't explain why.
+-- execute = function(cmd)
+--              local f = io.popen(cmd, 'r')
+--              local s = f:read('*all')
+--              f:close()
+--              s = s:gsub('^%s*',''):gsub('%s*$','')
+--              return s
+--           end
 
 --------------------------------------------------------------------------------
 -- returns the name of the OS in use
