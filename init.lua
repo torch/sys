@@ -72,7 +72,7 @@ toc = function(verbose)
 -- side effect: file in /tmp
 --------------------------------------------------------------------------------
 execute = function(cmd, readwhat)
-             local tmpfile = os.tmpname() .. _G.tostring(clock())
+             local tmpfile = os.tmpname()
              local cmd = cmd .. ' 1>'.. tmpfile..' 2>' .. tmpfile
              os.execute(cmd)
              local file = _G.assert(io.open(tmpfile))
