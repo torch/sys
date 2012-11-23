@@ -2,7 +2,8 @@ package = "sys"
 version = "1.0-0"
 
 source = {
-   url = "git://github.com/clementfarabet/lua---sys"
+   url = "git://github.com/clementfarabet/lua---sys",
+   tag = "1.0-0"
 }
 
 description = {
