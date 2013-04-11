@@ -117,10 +117,10 @@ OS = uname()
 --------------------------------------------------------------------------------
 -- ls (list dir)
 --------------------------------------------------------------------------------
-ls = function() return execute 'ls' end
-ll = function() return execute 'ls -l' end
-la = function() return execute 'ls -a' end
-lla = function() return execute 'ls -la' end
+ls  = function(d) d = d or ' ' return execute('ls '    ..d) end
+ll  = function(d) d = d or ' ' return execute('ls -l ' ..d) end
+la  = function(d) d = d or ' ' return execute('ls -a ' ..d) end
+lla = function(d) d = d or ' ' return execute('ls -la '..d) end
 
 --------------------------------------------------------------------------------
 -- prefix
