@@ -1,35 +1,5 @@
 ----------------------------------------------------------------------
---
--- Copyright (c) 2011 Clement Farabet
---
--- Permission is hereby granted, free of charge, to any person obtaining
--- a copy of this software and associated documentation files (the
--- "Software"), to deal in the Software without restriction, including
--- without limitation the rights to use, copy, modify, merge, publish,
--- distribute, sublicense, and/or sell copies of the Software, and to
--- permit persons to whom the Software is furnished to do so, subject to
--- the following conditions:
---
--- The above copyright notice and this permission notice shall be
--- included in all copies or substantial portions of the Software.
---
--- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
--- EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
--- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
--- NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
--- LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
--- OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
--- WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
---
-----------------------------------------------------------------------
--- description:
---     sys - a package that provides simple system (unix) tools
---
--- ack:
---     the C lib was largely taken from Torch5 (code from Ronan)
---
--- history:
---     March 27, 2011, 9:58PM - creation - Clement Farabet
+-- sys - a package that provides simple system (unix) tools
 ----------------------------------------------------------------------
 
 require 'os'
@@ -47,12 +17,12 @@ local ipairs = ipairs
 local paths = paths
 
 module 'sys'
-_lib = require 'libsys'
-_G.libsys = nil
 
 --------------------------------------------------------------------------------
 -- load all functions from lib
 --------------------------------------------------------------------------------
+_lib = require 'libsys'
+_G.libsys = nil
 for k,v in pairs(_lib) do
    _G.sys[k] = v
 end
@@ -71,9 +41,22 @@ toc = function(verbose)
 
 --------------------------------------------------------------------------------
 -- execute an OS command, but retrieves the result in a string
--- side effect: file in /tmp
 --------------------------------------------------------------------------------
-execute = function(cmd, readwhat)
+execute = function(cmd)
+             local cmd = cmd .. ' 2>&1'
+             local f = io.popen(cmd, 'r')
+             local s = f:read('*all')
+             f:close()
+             s = s:gsub('^%s*',''):gsub('%s*$','')
+             return s
+          end
+
+--------------------------------------------------------------------------------
+-- execute an OS command, but retrieves the result in a string
+-- side effect: file in /tmp
+-- this call is typically more robust than the one above (on some systems)
+--------------------------------------------------------------------------------
+fexecute = function(cmd, readwhat)
              local tmpfile = os.tmpname()
              local cmd = cmd .. ' 1>'.. tmpfile..' 2>' .. tmpfile
              os.execute(cmd)
@@ -84,16 +67,6 @@ execute = function(cmd, readwhat)
              os.execute('rm ' .. tmpfile)
              return s
           end
-
--- TODO: use the following code, which would avoid the side effect.
--- Issue: popen seems broken on OSX
--- execute = function(cmd)
---              local f = io.popen(cmd, 'r')
---              local s = f:read('*all')
---              f:close()
---              s = s:gsub('^%s*',''):gsub('%s*$','')
---              return s
---           end
 
 --------------------------------------------------------------------------------
 -- returns the name of the OS in use

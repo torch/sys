@@ -31,7 +31,7 @@ static int l_clock(lua_State *L) {
   struct tm *tm;
   gettimeofday(&tv, &tz);
   tm=localtime(&tv.tv_sec);
-  double precise_time = tm->tm_hour*3600 + tm->tm_min*60 + tm->tm_sec + tv.tv_usec / 1000000.0;
+  double precise_time = tv.tv_sec + tv.tv_usec / 1e6;
   lua_pushnumber(L,precise_time);
   return 1;
 }
