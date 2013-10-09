@@ -44,7 +44,7 @@ toc = function(verbose)
 --------------------------------------------------------------------------------
 execute = function(cmd)
              local cmd = cmd .. ' 2>&1'
-             local f = io.popen(cmd, 'r')
+             local f = io.popen(cmd)
              local s = f:read('*all')
              f:close()
              s = s:gsub('^%s*',''):gsub('%s*$','')
