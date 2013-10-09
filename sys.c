@@ -2,6 +2,20 @@
 #include <lua.h>
 #include <lauxlib.h>
 
+#ifdef LUA_WIN
+
+static int l_clock(lua_State *L) {
+    printf("warning: sys.clock not implemented on Windows\n");
+    return 0;
+}
+
+static int l_usleep(lua_State *L) {
+    printf("warning: sys.usleep not implemented on Windows\n");
+    return 0;
+}
+
+#else
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -28,6 +42,8 @@ static int l_usleep(lua_State *L) {
   usleep(time);
   return 1;
 }
+
+#endif
 
 static const struct luaL_reg routines [] = {
   {"clock", l_clock},
