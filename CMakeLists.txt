@@ -6,6 +6,6 @@ FIND_PACKAGE(Torch REQUIRED)
 SET(src sys.c)
 SET(luasrc init.lua)
 
-TARGET_LINK_LIBRARIES(sys luaT TH)
-
 ADD_TORCH_PACKAGE(sys "${src}" "${luasrc}")
+
+TARGET_LINK_LIBRARIES(sys luaT TH)
