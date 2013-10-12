@@ -180,5 +180,5 @@ COLORS = {none = '\27[0m',
 --------------------------------------------------------------------------------
 -- backward compat
 --------------------------------------------------------------------------------
-sys.dirname = paths.dirname
-sys.concat = paths.concat
+dirname = paths.dirname
+concat = paths.concat
