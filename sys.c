@@ -1,4 +1,3 @@
-
 #include <lua.h>
 #include <lauxlib.h>
 
@@ -45,7 +44,7 @@ static int l_usleep(lua_State *L) {
 
 #endif
 
-static const struct luaL_reg routines [] = {
+static const struct luaL_Reg routines [] = {
   {"clock", l_clock},
   {"usleep", l_usleep},
   {NULL, NULL}
@@ -53,6 +52,11 @@ static const struct luaL_reg routines [] = {
 
 int luaopen_libsys(lua_State *L)
 {
-  luaL_openlib(L, "libsys", routines, 0);
+  lua_newtable(L);
+#if LUA_VERSION_NUM == 501
+  luaL_register(L, NULL, routines);
+#else
+  luaL_setfuncs(L, routines, 0);
+#endif
   return 1;
 }
