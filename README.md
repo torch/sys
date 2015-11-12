@@ -7,7 +7,7 @@ Torch7 (www.torch.ch)
 
 ## Install
 ```
-$ torch-rocks install sys
+$ luarocks install sys
 ```
 
 ## Use
