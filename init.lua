@@ -78,7 +78,8 @@ function sys.uname()
       end
    end
 end
-sys.OS = sys.uname()
+local _, os = pcall(sys.uname)
+sys.OS = os
 
 --------------------------------------------------------------------------------
 -- ls (list dir)
