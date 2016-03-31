@@ -4,7 +4,7 @@ CMAKE_POLICY(VERSION 2.6)
 FIND_PACKAGE(Torch REQUIRED)
 
 SET(src sys.c)
-SET(luasrc init.lua)
+SET(luasrc init.lua colors.lua fpath.lua)
 
 ADD_TORCH_PACKAGE(sys "${src}" "${luasrc}")
 
