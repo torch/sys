@@ -48,11 +48,12 @@ sys.execute = execute
 -- this call is typically more robust than the one above (on some systems)
 --------------------------------------------------------------------------------
 function sys.fexecute(cmd, readwhat)
+   readwhat = readwhat or '*all'
    local tmpfile = os.tmpname()
    local cmd = cmd .. ' 1>'.. tmpfile..' 2>' .. tmpfile
    os.execute(cmd)
    local file = _G.assert(io.open(tmpfile))
-   local s = file:read('*all')
+   local s= file:read(readwhat)
    file:close()
    s = s:gsub('^%s*',''):gsub('%s*$','')
    os.execute('rm ' .. tmpfile)
