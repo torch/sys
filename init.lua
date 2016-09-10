@@ -69,10 +69,11 @@ function sys.uname()
    if paths.dirp('C:\\') then
       return 'windows'
    else
-      local os = execute('uname -a')
+      local ffi = require 'ffi'
+      local os = ffi.os
       if os:find('Linux') then
          return 'linux'
-      elseif os:find('Darwin') then
+      elseif os:find('OSX') then
          return 'macos'
       else
          return '?'
