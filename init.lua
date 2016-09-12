@@ -93,7 +93,25 @@ sys.lla = function(d) d = d or ' ' return execute('ls -la '..d) end
 --------------------------------------------------------------------------------
 -- prefix
 --------------------------------------------------------------------------------
-sys.prefix = execute('which lua'):gsub('//','/'):gsub('/bin/lua\n','')
+local function find_prefix()
+   if arg then
+      for i, v in pairs(arg) do
+	 if i <= 0 then
+	    local lua_path = paths.basename(v)
+	    if lua_path == "luajit" or lua_path == "lua" then
+	       local bin_dir = paths.dirname(v)
+	       if paths.basename(bin_dir) == "bin" then
+		  return paths.dirname(bin_dir)
+	       else
+		  return bin_dir
+	       end
+	    end
+	 end
+      end
+   end
+   return ""
+end
+sys.prefix = find_prefix()
 
 --------------------------------------------------------------------------------
 -- always returns the path of the file running
