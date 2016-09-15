@@ -16,6 +16,7 @@ Provides system functionalities for Torch.
 
 dependencies = {
    "torch >= 7.0",
+   "luaffi"
 }
 
 build = {
