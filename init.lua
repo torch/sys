@@ -96,7 +96,7 @@ sys.lla = function(d) d = d or ' ' return execute('ls -la '..d) end
 local function find_prefix()
    if arg then
       for i, v in pairs(arg) do
-	 if i <= 0 then
+	 if type(i) == "number" and type(v) == "string" and i <= 0 then
 	    local lua_path = paths.basename(v)
 	    if lua_path == "luajit" or lua_path == "lua" then
 	       local bin_dir = paths.dirname(v)
