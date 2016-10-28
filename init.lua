@@ -67,7 +67,7 @@ end
 --------------------------------------------------------------------------------
 function sys.uname()
    if paths.dirp('C:\\') then
-      return 'windows'
+      return 'Windows'
    else
       local ffi = require 'ffi'
       local os = ffi.os
